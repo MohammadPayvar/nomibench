@@ -7,9 +7,10 @@ license: BSD-3-Clause
 repository-code: "https://github.com/MohammadPayvar/nomibench"
 # doi: add the release DOI here once Zenodo has reserved or minted it (RELEASE_CHECKLIST.md)
 type: software
-authors:                         # TO FILL before the tagged release: affiliation and any co-authors, in order
+authors:                         # TO FILL before the tagged release: any co-authors, in order
   - family-names: "Payvar"
     given-names: "Mohammad"
+    affiliation: "Department of Biology, CT.C., Islamic Azad University, Tehran, Iran"
     orcid: "https://orcid.org/0000-0002-5972-9213"
 keywords:
   - Mendelian randomization
