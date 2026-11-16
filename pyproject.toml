@@ -38,8 +38,8 @@ parquet = ["pyarrow>=12"]                # only for reading .parquet gene tables
 nomibench = "nomibench.cli:main"
 
 [project.urls]
-Documentation = "https://github.com/FarhanHimself/nomibench#readme"
-Source = "https://github.com/FarhanHimself/nomibench"
+Documentation = "https://github.com/MohammadPayvar/nomibench#readme"
+Source = "https://github.com/MohammadPayvar/nomibench"
 
 [tool.setuptools.packages.find]
 where = ["src"]

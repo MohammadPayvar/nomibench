@@ -4,12 +4,13 @@ title: "nomibench: calibrated, discoverability-matched benchmarks of gene nomina
 version: 1.0.0
 date-released: 2026-10-06        # TO FILL: the date of the tagged release
 license: BSD-3-Clause
-repository-code: "https://github.com/FarhanHimself/nomibench"
+repository-code: "https://github.com/MohammadPayvar/nomibench"
 # doi: add the release DOI here once Zenodo has reserved or minted it (RELEASE_CHECKLIST.md)
 type: software
-authors:                         # TO FILL before the tagged release: affiliation, ORCID and any co-authors, in order
+authors:                         # TO FILL before the tagged release: affiliation and any co-authors, in order
   - family-names: "Payvar"
     given-names: "Mohammad"
+    orcid: "https://orcid.org/0000-0002-5972-9213"
 keywords:
   - Mendelian randomization
   - SMR
