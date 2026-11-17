@@ -24,6 +24,10 @@ N2_SD = 1.0
 MAXIT = 100
 """Firth iteration cap used by every registered analysis (the package default is 1,000)."""
 
+STARTS = 0
+"""G1 starts of paper 1's steps 19-25: a single start from zero. The package default (1.0.1) is the multi-start
+rule paper 1 registered in amendment A15 (30 perturbed starts); pass ``starts=STARTS`` to reproduce steps 19-25."""
+
 SEED_STEP19 = 20260927
 """Step 19: SeedSequence root of the E1 plasmode; children spawned in turn for N0, N1, N2 (2,000 each) and
 P-GW OR 1.5, 2.0, 2.7 (1,000 each)."""

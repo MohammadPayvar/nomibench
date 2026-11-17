@@ -16,6 +16,8 @@ amendment A10 outputs (E2-design plasmode, E2-matched negative control, 5-Mb gen
 --require-frozen stops if an input's sha256 differs from the frozen one; without it the mismatch is reported and
 the comparisons will show where the outputs differ.
 
+The frozen aggregate outputs are deposited in repro/paper1/frozen/ (checksums in its SHA256SUMS): pass
+--step19 repro/paper1/frozen/step19 --step20 repro/paper1/frozen/step20 --step25 repro/paper1/frozen/step25.
 --step19 holds gw19_results.csv, gw19_plasmode.csv, gw19_plasmode_raw_*.csv, gw19_e4_sets.csv, d1_results.csv and
 d1_plasmode_raw_N0.csv. --step20 holds real/e5_results.csv, real/e5_decisions.csv and cal/ (e5cal_design*.csv,
 e5cal_plasmode*.csv, e5cal_raw_*.csv, e5cal_asw_raw_*.csv, e5cal_nc_*.csv). --step25 holds a10_e2_plasmode_design.csv,
@@ -41,6 +43,7 @@ from nomibench.propensity import balance, fit_ps
 
 warnings.filterwarnings("ignore", category=nb.ConvergenceWarning)   # registered maxit=100 binds for E1 (R9)
 
+# G1 runs with REGD.STARTS (a single start), as steps 19-25 did
 TIERP, LIN, MAXIT = list(REGD.TIER_P), REGD.TIER_P_LINEAR, REGD.MAXIT
 REG = {"E1": 1.3421317211467318, "E1w": 1.358688072518047, "E2": 1.0279495452090348, "E5a": 0.9819827047006083,
        "E5c": 1.6404346532697651, "E5g": 3.4671675118848864, "E5b": 3.6343775335011737, "E5e": 1.2713501903708453,
@@ -145,7 +148,7 @@ def main():
 
 
     def load_y(kind):
-        d = pd.read_csv(A.smr, usecols=["probeID", "p_SMR", "p_HEIDI"])
+        d = nb.read_smr(A.smr)[["probeID", "p_SMR", "p_HEIDI"]]       # exact float parsing (1.0.1)
         p = d.p_SMR.values.astype(float); n = len(p); o = np.argsort(p)
         q = np.empty(n); q[o] = np.minimum.accumulate((p[o] * n / np.arange(1, n + 1))[::-1])[::-1]
         h = d.p_HEIDI.values.astype(float)
@@ -204,7 +207,7 @@ def main():
         say("-" * 78); say("R1  the ten registered G1 estimates (maxit = 100)")
         mx = 0.0
         for ex in ORDER:
-            r = g1(DS[ex].Y.values, DS[ex].E.values, PS[ex].logit, profile_levels=(), maxit=MAXIT)
+            r = g1(DS[ex].Y.values, DS[ex].E.values, PS[ex].logit, profile_levels=(), maxit=MAXIT, starts=REGD.STARTS)
             mx = max(mx, adiff(r.log_or, np.log(REG[ex])))
         check("R1", "ten G1 ln OR vs registered", mx, 1e-8, n=10)
 
@@ -233,7 +236,7 @@ def main():
             diffs[key] = cmp_row("R2", key, got, want, **k)
 
         def g1row(y, e, lps, level=0.95):
-            r = g1(y, e, lps, profile_levels=(level,), maxit=MAXIT)
+            r = g1(y, e, lps, profile_levels=(level,), maxit=MAXIT, starts=REGD.STARTS)
             lo, hi = r.profile_or(level)
             return (r.odds_ratio, lo, hi, r.pvalue)
 
@@ -283,7 +286,7 @@ def main():
             Rx = E5R[E5R.exposure == ex].set_index("analysis")
             Wx = lambda lab: tuple(Rx.loc[lab, ["OR", "lo", "hi", "P"]].astype(float))
             rec(f"{ex} naive", tuple(naive(y, e)), Wx("naive Fisher"))
-            r = g1(y, e, lps, profile_levels=(0.95, 0.975), wald_levels=(0.95, 0.975), maxit=MAXIT)
+            r = g1(y, e, lps, profile_levels=(0.95, 0.975), wald_levels=(0.95, 0.975), maxit=MAXIT, starts=REGD.STARTS)
             for lev, lab in ((0.95, "G1 PS-Firth (profile 95% CI)"), (0.975, "G1 PS-Firth (profile 97.5% CI)")):
                 rec(f"{ex} {lab}", (r.odds_ratio, *r.profile_or(lev), r.pvalue), Wx(lab))
             for lev, lab in ((0.95, "G1 PS-Firth (Wald 95% CI)"), (0.975, "G1 PS-Firth (Wald 97.5% CI)")):

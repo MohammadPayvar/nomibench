@@ -14,15 +14,12 @@ import pandas as pd
 from . import __version__
 from .aipw import d1
 from .benchmark import calibrate, evaluate, matched_controls
+from .io import read_table
 
 
-def _read(path):
-    if path.endswith(".parquet"):
-        try:
-            return pd.read_parquet(path)
-        except ImportError as err:
-            raise ValueError("reading .parquet needs pyarrow: pip install 'nomibench[parquet]'") from err
-    return pd.read_csv(path, sep="\t" if path.endswith((".tsv", ".tsv.gz")) else ",")
+def _read(path, id_column=None, missing_ids="error"):
+    """Exact float parsing and the explicit missing-identifier rule of :mod:`nomibench.io`."""
+    return read_table(path, id_columns=(id_column,) if id_column else (), missing_ids=missing_ids)
 
 
 def _common(p):
@@ -32,6 +29,10 @@ def _common(p):
     p.add_argument("--covariates", required=True, help="comma-separated discoverability covariates")
     p.add_argument("--linear", default="", help="covariates entered linearly in the propensity model")
     p.add_argument("--out", default=None, help="write results to this CSV")
+    p.add_argument("--id-column", default=None, help="gene identifier column: checked for missing and duplicated "
+                   "values (empty, NA, N/A, NaN, null, None, '-', '.')")
+    p.add_argument("--missing-ids", default="error", choices=["error", "drop"],
+                   help="rows with a missing identifier: stop (default) or drop and count them")
 
 
 def main(argv=None):
@@ -42,6 +43,7 @@ def main(argv=None):
     _common(pe)
     pe.add_argument("--locus", default=None, help="column of GWAS-locus interval ids (empty outside loci)")
     pe.add_argument("--locus-distance", default=None, help="column of log10(distance to index variant + 1 kb)")
+    pe.add_argument("--starts", type=int, default=30, help="perturbed starts of G1's multi-start rule (0: one start)")
     pc = sub.add_parser("calibrate", help="plasmode calibration (the exposure's outcomes are not read)")
     _common(pc)
     pc.add_argument("--generator-covariates", required=True)
@@ -71,11 +73,12 @@ def main(argv=None):
 
 
 def _run(a):
-    df = _read(a.data)
+    df = _read(a.data, a.id_column, a.missing_ids)
     cov = [c for c in a.covariates.split(",") if c]
     lin = [c for c in a.linear.split(",") if c]
     if a.cmd == "evaluate":
-        res = evaluate(df, a.outcome, a.exposure, cov, lin, locus=a.locus, locus_distance=a.locus_distance)
+        res = evaluate(df, a.outcome, a.exposure, cov, lin, locus=a.locus, locus_distance=a.locus_distance,
+                       starts=a.starts)
         print(res.to_string(index=False))
         print(json.dumps(res.attrs, indent=1))
     elif a.cmd == "calibrate":

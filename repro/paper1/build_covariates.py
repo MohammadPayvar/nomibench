@@ -29,6 +29,8 @@ import re
 import numpy as np
 import pandas as pd
 
+from nomibench.io import read_table
+
 GVC = ["ABCA7", "ABI3", "APOE", "APP", "BIN1", "CASP7", "PLCG2", "PSEN1", "PSEN2", "SORL1", "SPI1", "TREM2"]
 """E3: the 12 genes linked to the ADSP Gene Verification Committee's Phase-1 high-confidence loci."""
 
@@ -96,7 +98,9 @@ def assign_all(pos, chrom, LOC, IDX):
 
 def build(smr_path, topeffects, G, LOC, IDX):
     """Tier P and loci for every gene in an SMR output file (eQTL-side columns only)."""
-    S = pd.read_csv(smr_path, usecols=["probeID", "Gene", "ProbeChr", "Probe_bp", "b_eQTL", "se_eQTL"])
+    # exact float parsing (nomibench 1.0.1); duplicated probes are allowed and resolved below, as registered
+    S = read_table(smr_path, id_columns=("probeID",), unique=False,
+                   usecols=["probeID", "Gene", "ProbeChr", "Probe_bp", "b_eQTL", "se_eQTL"])
     S["z_e"] = (S.b_eQTL / S.se_eQTL).abs()
     S["ProbeChr"] = S.ProbeChr.astype(str)
     S = S.sort_values("z_e", ascending=False).drop_duplicates("probeID").rename(columns={"probeID": "ensg", "Gene": "symbol"})

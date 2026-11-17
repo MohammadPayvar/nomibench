@@ -16,24 +16,26 @@ often "supported", so an unmatched comparison rewards discoverability. The packa
 Modules: :mod:`~nomibench.firth`, :mod:`~nomibench.conditional`, :mod:`~nomibench.tables`,
 :mod:`~nomibench.propensity`, :mod:`~nomibench.estimators`, :mod:`~nomibench.plasmode`,
 :mod:`~nomibench.negative_control`, :mod:`~nomibench.aipw`, :mod:`~nomibench.bootstrap`,
-:mod:`~nomibench.decisions`, :mod:`~nomibench.registered`; one-call entry points in :mod:`~nomibench.benchmark`.
+:mod:`~nomibench.decisions`, :mod:`~nomibench.registered`, :mod:`~nomibench.io` (exact table reading); one-call
+entry points in :mod:`~nomibench.benchmark`.
 """
 from importlib.metadata import PackageNotFoundError, version as _version
 
-from . import aipw, bootstrap, conditional, decisions, estimators, firth, negative_control, plasmode, propensity, \
-    registered, tables
+from . import aipw, bootstrap, conditional, decisions, estimators, firth, io, negative_control, plasmode, \
+    propensity, registered, tables
 from ._util import ConvergenceWarning
 from .benchmark import Calibration, calibrate, evaluate, matched_controls
 from .estimators import g1, g1_design
-from .firth import firth_fit, firth_lrt, firth_profile_ci
+from .firth import firth_fit, firth_fit_multistart, firth_lrt, firth_profile_ci
+from .io import read_smr, read_table
 from .propensity import fit_ps
 
 try:
     __version__ = _version("nomibench")
 except PackageNotFoundError:          # running from a source tree
-    __version__ = "1.0.0"
+    __version__ = "1.0.1"
 
 __all__ = ["__version__", "ConvergenceWarning", "evaluate", "calibrate", "matched_controls", "Calibration",
-           "g1", "g1_design", "fit_ps", "firth_fit", "firth_lrt", "firth_profile_ci", "aipw", "bootstrap",
-           "conditional", "decisions", "estimators", "firth", "negative_control", "plasmode", "propensity",
-           "registered", "tables"]
+           "g1", "g1_design", "fit_ps", "firth_fit", "firth_fit_multistart", "firth_lrt", "firth_profile_ci",
+           "read_table", "read_smr", "aipw", "bootstrap", "conditional", "decisions", "estimators", "firth", "io",
+           "negative_control", "plasmode", "propensity", "registered", "tables"]

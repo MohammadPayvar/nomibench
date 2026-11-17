@@ -28,7 +28,7 @@ from . import plasmode as _pm
 from ._util import check_table
 from .decisions import NC_BAND, VALIDITY_THRESHOLD
 from .estimators import g1, g1_design, g1b, g1c, h_design, h_interaction, naive, w1
-from .firth import DEFAULT_MAXIT, firth_fit
+from .firth import DEFAULT_MAXIT, DEFAULT_STARTS, firth_fit
 from .propensity import balance, fit_ps
 
 __all__ = ["evaluate", "calibrate", "matched_controls", "Calibration", "check_table", "locus_arrays"]
@@ -67,14 +67,16 @@ def _w1_identified(y, e, sid):
 
 
 def evaluate(df: pd.DataFrame, outcome: str, exposure: str, covariates, linear=(), locus=None, locus_distance=None,
-             maxit=DEFAULT_MAXIT, wald_levels=(0.95, 0.975), profile_levels=(0.95,)) -> pd.DataFrame:
+             maxit=DEFAULT_MAXIT, wald_levels=(0.95, 0.975), profile_levels=(0.95,), starts=DEFAULT_STARTS,
+             start_seed=0) -> pd.DataFrame:
     """Estimate enrichment of ``outcome`` among ``exposure`` genes, adjusted for discoverability.
 
     Rows: naive Fisher; G1 (primary; profile and Wald intervals); G1b; G1c; and, when ``locus`` is given, the
     exposure x in-locus interaction (H) and the within-locus conditional estimate (W1; adjusted for the distance
     term when ``locus_distance`` is given, and for the logit propensity score). Columns: ``estimator, OR, lo, hi,
-    P, interval, converged``. ``attrs`` carries counts, the propensity c-statistic and the largest |SMD| before
-    and after quintile weighting.
+    P, interval, converged``. ``attrs`` carries counts, the propensity c-statistic, the largest |SMD| before
+    and after quintile weighting, and G1's multi-start record (``starts``, ``g1_stationary_points``,
+    ``g1_zero_start_best``; see :func:`nomibench.estimators.g1`).
     """
     D = df.reset_index(drop=True)
     check_table(D, outcome, exposure, covariates)
@@ -89,7 +91,8 @@ def evaluate(df: pd.DataFrame, outcome: str, exposure: str, covariates, linear=(
 
     fr = naive(y, e)
     rec("naive (Fisher)", fr.odds_ratio, fr.lo, fr.hi, fr.pvalue, "exact 95%")
-    r = g1(y, e, ps.logit, profile_levels=profile_levels, wald_levels=wald_levels, maxit=maxit)
+    r = g1(y, e, ps.logit, profile_levels=profile_levels, wald_levels=wald_levels, maxit=maxit, starts=starts,
+           start_seed=start_seed)
     for lev in profile_levels:
         lo, hi = r.profile_or(lev)
         rec("G1", r.odds_ratio, lo, hi, r.pvalue, f"profile {lev:.1%}", r.converged)
@@ -121,7 +124,8 @@ def evaluate(df: pd.DataFrame, outcome: str, exposure: str, covariates, linear=(
     out = pd.DataFrame(rows)
     out.attrs.update(n=len(D), exposed=int(e.sum()), events_exposed=int(y[e == 1].sum()),
                      events_other=int(y[e == 0].sum()), ps_c=float(ps.c_statistic), ps_converged=ps.converged,
-                     max_abs_smd_raw=float(bal.smd_raw.abs().max()), max_abs_smd_after=float(bal.smd_psq.abs().max()))
+                     max_abs_smd_raw=float(bal.smd_raw.abs().max()), max_abs_smd_after=float(bal.smd_psq.abs().max()),
+                     starts=r.starts, g1_stationary_points=r.n_stationary, g1_zero_start_best=r.zero_start_best)
     return out
 
 

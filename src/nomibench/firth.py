@@ -21,6 +21,16 @@ log-likelihood fell below ``tol``. Along a nearly flat direction this can hold w
 Fitted probabilities are clipped to [1e-15, 1 - 1e-15] inside the likelihood, as registered. Under (quasi-)complete
 separation a profile bound can lie where the clip binds; :func:`firth_profile_ci` then flags the interval as
 ``saturated``, and that bound should be read as unbounded.
+
+**Multi-start (1.0.1).** The Firth penalised likelihood of a logistic model with a propensity-score spline can have
+more than one local maximum when the outcome is sparse and nearly separated along the spline (paper 1,
+amendments A14, A15 and A17). :func:`firth_fit_multistart` applies the rule paper 1 registered in amendment A15:
+fit from zero, then from 30 perturbations of that solution (10 each at 0.5, 2 and 5 Fisher standard errors); keep
+the stationary point (largest absolute modified score below ``score_tol``) with the highest penalised
+log-likelihood, with ties within ``tie_tol`` going to the zero-start point. On a likelihood with one maximum it
+returns the zero-start fit itself, bit for bit. The rule lowers, but does not remove, the risk of reporting a lower
+maximum: on the bimodal test fixture (``tests/data/firth_bimodal.csv``) the 30 starts reach the higher maximum for
+18 of 60 seeds. ``n_stationary`` > 1 in the result flags that more than one maximum was seen.
 """
 from __future__ import annotations
 
@@ -35,8 +45,16 @@ from ._util import expit, warn_not_converged
 DEFAULT_MAXIT = 1000
 REGISTERED_MAXIT = 100
 
-__all__ = ["FirthFit", "LRTResult", "ProfileCI", "firth_fit", "firth_lrt", "firth_profile_ci", "wald_se",
-           "wald_ci", "DEFAULT_MAXIT", "REGISTERED_MAXIT"]
+__all__ = ["FirthFit", "MultiStartFit", "LRTResult", "ProfileCI", "firth_fit", "firth_fit_multistart", "firth_lrt",
+           "firth_profile_ci", "wald_se", "wald_ci", "DEFAULT_MAXIT", "REGISTERED_MAXIT", "DEFAULT_STARTS",
+           "STATIONARY_TOL", "TIE_TOL"]
+
+DEFAULT_STARTS = 30
+"""Perturbed starts used by :func:`firth_fit_multistart` (and by ``g1`` and ``evaluate`` by default)."""
+STATIONARY_TOL = 1e-6
+"""A fit is a stationary point if its largest absolute modified score is below this (A15)."""
+TIE_TOL = 1e-6
+"""Penalised log-likelihoods within this of the zero-start fit's count as ties, which the zero start wins (A15)."""
 
 
 def _pen_loglik(X, y, beta):
@@ -151,6 +169,78 @@ def firth_fit(X, y, fixed=None, beta0=None, maxit=DEFAULT_MAXIT, tol=1e-9, warn=
 
 
 @dataclass
+class MultiStartFit(FirthFit):
+    """Result of :func:`firth_fit_multistart`: the selected fit plus a record of the starts.
+
+    ``n_stationary`` counts distinct stationary points (penalised log-likelihoods more than ``tie_tol`` apart);
+    ``zero_start_best`` is True when the zero-start fit was kept; ``failed`` is True when no start reached a
+    stationary point (the zero-start fit is then returned, flagged).
+    """
+    n_starts: int = 1
+    n_stationary: int = 1
+    zero_start_best: bool = True
+    failed: bool = False
+
+
+def _select_start(cands, tie_tol=TIE_TOL):
+    """Index of the selected start among ``cands`` = [(loglik, stationary), ...], the zero start first.
+
+    The highest penalised log-likelihood among stationary starts wins; a start must beat the zero start by more
+    than ``tie_tol`` to replace it. Returns ``(index, n_distinct_stationary, failed)``.
+    """
+    stat = [i for i, (_, s) in enumerate(cands) if s]
+    if not stat:
+        return 0, 0, True
+    levels = []
+    for i in sorted(stat, key=lambda i: -cands[i][0]):
+        if all(abs(cands[i][0] - v) > tie_tol for v in levels):
+            levels.append(cands[i][0])
+    best = max(stat, key=lambda i: cands[i][0])
+    if 0 in stat and cands[best][0] - cands[0][0] <= tie_tol:
+        best = 0
+    return best, len(levels), False
+
+
+def firth_fit_multistart(X, y, starts=DEFAULT_STARTS, scales=(0.5, 2.0, 5.0), seed=0, maxit=DEFAULT_MAXIT, tol=1e-9,
+                         score_tol=STATIONARY_TOL, tie_tol=TIE_TOL) -> MultiStartFit:
+    """Firth fit with the multi-start rule of paper 1's amendment A15 (see the module notes).
+
+    Parameters
+    ----------
+    starts : number of perturbed starts, split evenly over ``scales`` (A15: 30); 0 gives the single zero start.
+    scales : perturbation sizes in Fisher standard errors (from the expected information at the zero-start fit).
+    seed : seed of the Gaussian perturbations (an int, a SeedSequence or a Generator).
+    """
+    X = np.asarray(X, float)
+    y = np.asarray(y, float)
+    f0 = firth_fit(X, y, maxit=maxit, tol=tol, warn=False)
+    fits = [f0]
+    if starts > 0:
+        rng = seed if isinstance(seed, np.random.Generator) else np.random.default_rng(seed)
+        pi = expit(X @ f0.beta)
+        info = X.T @ (X * (pi * (1 - pi))[:, None])
+        try:
+            se = np.sqrt(np.clip(np.diag(np.linalg.inv(info)), 0, None))
+        except np.linalg.LinAlgError:
+            se = np.sqrt(np.clip(np.diag(np.linalg.pinv(info)), 0, None))
+        k = len(scales)
+        per = [starts // k + (1 if i < starts % k else 0) for i in range(k)]
+        # a start far from the estimate can overflow exp(); the fitted probabilities are clipped, so silence it
+        with np.errstate(over="ignore"):
+            for sc, m in zip(scales, per):
+                for _ in range(m):
+                    b0 = f0.beta + sc * se * rng.standard_normal(X.shape[1])
+                    fits.append(firth_fit(X, y, beta0=b0, maxit=maxit, tol=tol, warn=False))
+    cands = [(f.loglik, bool(np.isfinite(f.loglik) and f.max_abs_score < score_tol)) for f in fits]
+    i, n_stat, failed = _select_start(cands, tie_tol)
+    f = fits[i]
+    if failed and not f.converged:
+        warn_not_converged("firth_fit_multistart (no start reached a stationary point)", maxit)
+    return MultiStartFit(f.beta, f.loglik, f.converged, f.n_iter, f.max_abs_score, n_starts=len(fits),
+                         n_stationary=n_stat, zero_start_best=(i == 0), failed=failed)
+
+
+@dataclass
 class LRTResult:
     """Penalised likelihood-ratio test of beta_j = 0. Unpacks as ``beta, stat, pvalue``."""
     beta: np.ndarray
@@ -167,16 +257,23 @@ class LRTResult:
         return (self.beta, self.stat, self.pvalue)[k]
 
 
-def firth_lrt(X, y, j, maxit=DEFAULT_MAXIT, tol=1e-9, full=None) -> LRTResult:
+def firth_lrt(X, y, j, maxit=DEFAULT_MAXIT, tol=1e-9, full=None, zero_start=False, tie_tol=TIE_TOL) -> LRTResult:
     """Penalised likelihood-ratio test of H0: beta_j = 0 (Heinze & Schemper 2002), chi-squared on 1 df.
 
     ``full`` may pass an existing unrestricted :class:`FirthFit` of the same ``X``, ``y``, ``maxit`` and ``tol``;
-    the fit is deterministic, so reusing it gives the identical result.
+    the fit is deterministic, so reusing it gives the identical result. The restricted fit starts from the
+    unrestricted estimate with beta_j set to 0; with ``zero_start=True`` (the multi-start rule of A15) a second
+    restricted fit starts from zero, and it is used only if its penalised log-likelihood is higher by more than
+    ``tie_tol``.
     """
     X = np.asarray(X, float)
     f = full if full is not None else firth_fit(X, y, maxit=maxit, tol=tol)
     b, lp = f.beta, f.loglik
     f0 = firth_fit(X, y, fixed={j: 0.0}, beta0=np.where(np.arange(X.shape[1]) == j, 0, b), maxit=maxit, tol=tol)
+    if zero_start:
+        fz = firth_fit(X, y, fixed={j: 0.0}, maxit=maxit, tol=tol, warn=False)
+        if fz.loglik - f0.loglik > tie_tol:
+            f0 = fz
     stat = max(2 * (lp - f0.loglik), 0.0)
     return LRTResult(b, stat, chi2.sf(stat, 1), bool(f.converged and f0.converged))
 

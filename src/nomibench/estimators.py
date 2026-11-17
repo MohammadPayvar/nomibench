@@ -24,7 +24,7 @@ from scipy.stats import chi2, norm
 
 from ._util import expit
 from .conditional import cfl_fit, cfl_profile_ci, make_strata
-from .firth import DEFAULT_MAXIT, firth_fit, firth_lrt, firth_profile_ci, wald_se
+from .firth import DEFAULT_MAXIT, DEFAULT_STARTS, firth_fit, firth_fit_multistart, firth_lrt, firth_profile_ci, wald_se
 from .tables import fisher, mh_rbg, poibin_two_sided, strat_counts
 
 __all__ = ["g1_design", "h_design", "G1Result", "g1", "g1b", "g1c", "h_interaction", "W1Result", "w1", "w2",
@@ -58,6 +58,9 @@ class G1Result:
     events_exposed: int = 0
     events_other: int = 0
     converged: bool = True
+    starts: int = 0                 # perturbed starts tried (0: single start from zero)
+    n_stationary: int = 1           # distinct stationary points found among the starts
+    zero_start_best: bool = True    # the zero-start fit was kept
 
     @property
     def odds_ratio(self):
@@ -70,7 +73,8 @@ class G1Result:
         return tuple(float(np.exp(v)) for v in self.wald[level])
 
 
-def g1(y, e, lps, profile_levels=(0.95,), wald_levels=(0.95,), maxit=DEFAULT_MAXIT, tol=1e-9) -> G1Result:
+def g1(y, e, lps, profile_levels=(0.95,), wald_levels=(0.95,), maxit=DEFAULT_MAXIT, tol=1e-9,
+       starts=DEFAULT_STARTS, start_seed=0) -> G1Result:
     """G1: Firth logistic ``Y ~ E + s(logit PS)``.
 
     Parameters
@@ -80,24 +84,35 @@ def g1(y, e, lps, profile_levels=(0.95,), wald_levels=(0.95,), maxit=DEFAULT_MAX
     profile_levels : confidence levels for profile penalised-likelihood intervals.
     wald_levels : confidence levels for Wald intervals (paper 1's co-primary rule uses 0.975).
     maxit : Firth iteration cap; ``REGISTERED_MAXIT`` (100) reproduces paper 1.
+    starts : perturbed starts of the multi-start rule (:func:`nomibench.firth.firth_fit_multistart`; default 30,
+        as paper 1 registered in amendment A15). The estimate is the stationary point with the highest penalised
+        likelihood; the profile interval is computed from it, and the penalised LRT uses the better of two
+        restricted fits (started from the estimate and from zero). ``starts=0`` is the single zero start of
+        paper 1's steps 19-25 (``nomibench.registered.STARTS``).
+    start_seed : seed of the perturbations.
     """
     y = np.asarray(y, float)
     e = np.asarray(e, float)
     X = g1_design(lps, e)
-    f = firth_fit(X, y, maxit=maxit, tol=tol)
+    if starts > 0:
+        f = firth_fit_multistart(X, y, starts=starts, seed=start_seed, maxit=maxit, tol=tol)
+        ms = (f.n_starts - 1, f.n_stationary, f.zero_start_best)
+    else:
+        f = firth_fit(X, y, maxit=maxit, tol=tol)
+        ms = (0, 1, True)
     b, lp = f.beta, f.loglik
-    conv = f.converged
+    conv = f.converged and not getattr(f, "failed", False)
     prof = {}
     for lev in profile_levels:
         ci = firth_profile_ci(X, y, 1, b, lp, level=lev, maxit=maxit, tol=tol)
         prof[lev] = (ci.lo, ci.hi)
         conv = conv and ci.converged
-    t = firth_lrt(X, y, 1, maxit=maxit, tol=tol, full=f)
+    t = firth_lrt(X, y, 1, maxit=maxit, tol=tol, full=f, zero_start=starts > 0)
     conv = conv and t.converged
     se = wald_se(X, b, 1)
     wd = {lev: (b[1] - norm.ppf(0.5 + lev / 2) * se, b[1] + norm.ppf(0.5 + lev / 2) * se) for lev in wald_levels}
     return G1Result(float(b[1]), se, float(t.pvalue), prof, wd, len(y), int(e.sum()), int(y[e == 1].sum()),
-                    int(y[e == 0].sum()), bool(conv))
+                    int(y[e == 0].sum()), bool(conv), *ms)
 
 
 def g1b(y, e, ps_quintile):
