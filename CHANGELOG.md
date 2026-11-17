@@ -1,5 +1,47 @@
 # Changelog
 
+## 1.0.1 (2026-11-17)
+
+A patch release. The registered numbers of paper 1 are unchanged: in paper 1's step-20 environment the reproduction
+gives the same 28 passing criteria, line for line, under 1.0.0 and 1.0.1 (`docs/VALIDATION.md`, §0).
+
+**Exact reading of tables (`nomibench.io`, new)**
+- `read_table` and `read_smr` parse floats exactly (`float_precision="round_trip"`). pandas' default parser
+  rounds long fixed-notation numbers, and SMR writes P values that way: in paper 1's SMR table it misread 24 of
+  11,224 `p_SMR` values (4 as 0; all below 6×10⁻¹¹) and 13 `p_HEIDI` values (2 as 0). No gene's outcome changed
+  under the BH or the Bonferroni rule. `reproduce_registered.py` and `build_covariates.py` now use these readers;
+  the command line uses `read_table`.
+- **Missing identifiers.** Identifier columns are read as text without automatic NA conversion. A value that is
+  empty or one of `NA`, `N/A`, `NaN`, `null`, `None`, `-` or `.` (case-insensitive, after stripping white space)
+  is missing. Such rows raise by default or are dropped and counted (`missing_ids="drop"`). Duplicated
+  identifiers raise unless `unique=False`. `read_smr` also checks that `p_SMR` and `p_HEIDI` lie in [0, 1].
+- Command line: `--id-column` and `--missing-ids`. `.txt` and `.smr` files (optionally gzipped) are now read as
+  tab-separated, like `.tsv`.
+
+**Multi-start Firth fits**
+- `firth_fit_multistart`: the fit from zero, plus 30 starts perturbed from it by Gaussian noise of 0.5, 2 and
+  5 Fisher standard errors (10 at each size); a start counts if it converges to a stationary point (largest modified score below 1e-6); the estimate
+  is the stationary point with the highest penalised likelihood, with ties within 1e-6 going to the zero start.
+  This is the rule paper 1 registered in amendment A15. With a unimodal penalised likelihood, the usual case,
+  the result is the zero-start fit bit for bit.
+- `g1` and `evaluate` use it by default (`starts=30`, `start_seed=0`) and report `starts`, `n_stationary` and
+  `zero_start_best`. The penalised LRT uses the better of two restricted fits (from the estimate and from zero).
+  `starts=0` gives the single start of paper 1's steps 19–25 (`nomibench.registered.STARTS`), which the
+  reproduction uses. Command line: `evaluate --starts`.
+- Plasmode replicates, matched control sets and the block bootstrap keep the single zero start, as registered.
+- The rule lowers, but does not remove, the risk of reporting a lower local maximum: on the bimodal test fixture,
+  30 starts reach the higher maximum for 18 of 60 seeds.
+
+**Tests and repository**
+- New tests: exact parsing and the missing-identifier rule (`tests/test_io.py`); the multi-start rule on a
+  bimodal and a unimodal design and the selection rule itself (`tests/test_firth_multistart.py`, with
+  `tests/data/firth_bimodal.csv` and its generator `tests/reference/make_bimodal_fixture.py`); the deposited
+  frozen outputs (`tests/test_frozen_deposit.py`).
+- `repro/paper1/frozen/`: paper 1's frozen aggregate outputs of steps 19, 20 and 25 (89 files, no gene-level
+  values), with `SHA256SUMS`, so the reproduction's comparison files are public.
+- The linter's rule set is stated explicitly (ruff 0.16 enlarged its defaults).
+- Metadata: author, ORCID, affiliation and the repository's new address.
+
 ## 1.0.0 (2026-10-06)
 
 First release, accompanying paper 1. The estimators are the registered analysis code, ported without changing

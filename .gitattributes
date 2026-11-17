@@ -2,3 +2,6 @@
 * text=auto eol=lf
 *.whl binary
 *.gz binary
+
+# deposited frozen outputs: keep their bytes exactly (SHA256SUMS)
+repro/paper1/frozen/** -text

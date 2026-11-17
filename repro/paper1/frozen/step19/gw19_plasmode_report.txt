@@ -1,0 +1,86 @@
+==============================================================================
+A  U_gw analysis set, exposures, propensity scores (no outcome is read)
+==============================================================================
+  U_gw with complete Tier P: 11,212 genes | in-locus 513 in 73 intervals
+  E1 528 | E2 2885 | E3 6 | MHC/APOE 160
+  E1   (E1 in 11,212 genes, 528 exposed): PS c-statistic 0.658; max |SMD| raw 0.386 -> after PS quintiles 0.022
+         x_N    SMD raw +0.128  after -0.015
+         x_snp  SMD raw -0.038  after +0.015
+         x_nd   SMD raw +0.099  after -0.019
+         x_len  SMD raw -0.169  after +0.007
+         x_den  SMD raw +0.386  after +0.022
+         x_z    SMD raw +0.110  after +0.011
+  E1w  (E1 in 2,885 genes, 528 exposed): PS c-statistic 0.609; max |SMD| raw 0.304 -> after PS quintiles 0.031
+         x_N    SMD raw +0.022  after +0.031
+         x_snp  SMD raw -0.042  after +0.020
+         x_nd   SMD raw +0.003  after +0.020
+         x_len  SMD raw -0.004  after +0.003
+         x_den  SMD raw +0.110  after +0.018
+         x_z    SMD raw -0.304  after -0.009
+  E2   (E2 in 11,212 genes, 2885 exposed): PS c-statistic 0.700; max |SMD| raw 0.483 -> after PS quintiles 0.070
+         x_N    SMD raw +0.137  after +0.014
+         x_snp  SMD raw -0.001  after +0.022
+         x_nd   SMD raw +0.124  after +0.016
+         x_len  SMD raw -0.210  after -0.015
+         x_den  SMD raw +0.386  after +0.029
+         x_z    SMD raw +0.483  after +0.070
+  v1 reference for E1w (same genes, same model): c-statistic 0.609, max |SMD| after 0.031
+==============================================================================
+B  plasmode on U_gw, exposure E1 (null generator: non-E1 genes only)
+==============================================================================
+  generator: int +0.792, log z_e +0.375, log10 len -0.101, log10 nsnp -1.477, L +4.206, L*log10 D -0.384
+  expected events per replicate: N0 193.9 (E1 10.3, in-locus 57.9) | N1 193.9 | N2 logit shift -0.341
+    N0           2000 replicates  (11.0 min)
+    N1           2000 replicates  (20.4 min)
+    N2           2000 replicates  (29.6 min)
+    P-GW_OR1.5   1000 replicates  (33.9 min)
+    P-GW_OR2.0   1000 replicates  (38.2 min)
+    P-GW_OR2.7   1000 replicates  (42.8 min)
+  N0
+    naive_fisher         type-I 0.056 (MC SE 0.005) mean logOR +0.078  calibrated
+    G1_ps_firth          type-I 0.047 (MC SE 0.005) mean logOR +0.000  calibrated
+    G1b_ps_mh            type-I 0.044 (MC SE 0.005) mean logOR -0.048  calibrated
+    G1c_oe               type-I 0.043 (MC SE 0.005) mean logOR -0.064  calibrated
+    H_interaction        type-I 0.047 (MC SE 0.005) mean logOR +0.105  calibrated
+    W1_cfl               type-I 0.038 (MC SE 0.004) mean logOR -0.051  calibrated
+    G1_equiv_upper_lt_2  P(upper<2) 0.452 (MC SE 0.011) mean logOR +0.000
+  N1
+    naive_fisher         type-I 0.076 (MC SE 0.006) mean logOR +0.106  ANTI-CONSERVATIVE
+    G1_ps_firth          type-I 0.044 (MC SE 0.005) mean logOR +0.005  calibrated
+    G1b_ps_mh            type-I 0.038 (MC SE 0.004) mean logOR -0.047  calibrated
+    G1c_oe               type-I 0.037 (MC SE 0.004) mean logOR -0.050  calibrated
+    H_interaction        type-I 0.050 (MC SE 0.005) mean logOR +0.121  calibrated
+    W1_cfl               type-I 0.048 (MC SE 0.005) mean logOR -0.096  calibrated
+    G1_equiv_upper_lt_2  P(upper<2) 0.434 (MC SE 0.011) mean logOR +0.005
+  N2
+    naive_fisher         type-I 0.066 (MC SE 0.006) mean logOR +0.093  ANTI-CONSERVATIVE
+    G1_ps_firth          type-I 0.043 (MC SE 0.005) mean logOR +0.018  calibrated
+    G1b_ps_mh            type-I 0.040 (MC SE 0.004) mean logOR -0.030  calibrated
+    G1c_oe               type-I 0.042 (MC SE 0.004) mean logOR -0.045  calibrated
+    H_interaction        type-I 0.048 (MC SE 0.005) mean logOR +0.109  calibrated
+    W1_cfl               type-I 0.038 (MC SE 0.004) mean logOR -0.025  calibrated
+    G1_equiv_upper_lt_2  P(upper<2) 0.462 (MC SE 0.011) mean logOR +0.018
+  P-GW_OR1.5
+    naive_fisher         power 0.450 (MC SE 0.016) mean logOR +0.503
+    G1_ps_firth          power 0.320 (MC SE 0.015) mean logOR +0.408
+    G1b_ps_mh            power 0.324 (MC SE 0.015) mean logOR +0.378
+    G1c_oe               power 0.297 (MC SE 0.014) mean logOR +0.351
+    H_interaction        power 0.055 (MC SE 0.007) mean logOR +0.121
+    W1_cfl               power 0.128 (MC SE 0.011) mean logOR +0.407
+  P-GW_OR2.0
+    naive_fisher         power 0.815 (MC SE 0.012) mean logOR +0.763
+    G1_ps_firth          power 0.711 (MC SE 0.014) mean logOR +0.663
+    G1b_ps_mh            power 0.711 (MC SE 0.014) mean logOR +0.639
+    G1c_oe               power 0.700 (MC SE 0.014) mean logOR +0.604
+    H_interaction        power 0.053 (MC SE 0.007) mean logOR +0.045
+    W1_cfl               power 0.224 (MC SE 0.013) mean logOR +0.610
+  P-GW_OR2.7
+    naive_fisher         power 0.983 (MC SE 0.004) mean logOR +1.053
+    G1_ps_firth          power 0.964 (MC SE 0.006) mean logOR +0.948
+    G1b_ps_mh            power 0.966 (MC SE 0.006) mean logOR +0.927
+    G1c_oe               power 0.961 (MC SE 0.006) mean logOR +0.880
+    H_interaction        power 0.057 (MC SE 0.007) mean logOR +0.074
+    W1_cfl               power 0.467 (MC SE 0.016) mean logOR +0.932
+  VALIDITY RULE: G1 CALIBRATED -- primary
+
+DONE (plasmode only) in 42.8 min

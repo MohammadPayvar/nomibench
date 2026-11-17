@@ -26,6 +26,7 @@ support. Matching on it is not optional when the nomination source was itself bu
 - **G1 (primary).**
   - Model: Firth logistic regression `Y ~ E + s(logit e(X))`, with a 3-df cubic regression spline.
   - Estimation: penalised maximum likelihood with Jeffreys' prior (Firth 1993). The bias reduction matters because support is rare (about 2% of genes in paper 1) and nominated sets can be small.
+  - Multi-start rule (1.0.1; paper 1's amendment A15). In sparse designs the penalised likelihood can have more than one local maximum. The fit from zero is followed by 30 starts perturbed from it (Gaussian noise of 0.5, 2 and 5 Fisher standard errors, 10 at each size). A start counts if it reaches a stationary point (largest modified score below 1e-6); the estimate is the stationary point with the highest penalised likelihood, and ties within 1e-6 go to the zero start. The penalised LRT uses the better of two restricted fits, from the estimate and from zero. `starts=0` reproduces paper 1's steps 19–25, which used the zero start only. Plasmode replicates, matched control sets and the bootstrap use the zero start, as registered.
   - Test: the penalised likelihood-ratio test.
   - Intervals: profile penalised-likelihood intervals (Heinze & Schemper 2002). Restricted fits keep the penalty of the full design, as in R `logistf`.
   - Wald intervals use the expected information at the Firth estimate.

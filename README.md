@@ -9,7 +9,8 @@ gene-dense regions and be well studied. Such genes are both nominated more often
 an unmatched comparison rewards discoverability rather than biology. `nomibench` estimates enrichment beyond
 discoverability and calibrates the estimator before the contrast is read.
 
-It is the released code of the benchmark in *[paper 1 citation, to be added]*.
+It is the released code of the benchmark in Payvar M., *A calibrated benchmark of Alzheimer's disease gene
+nominations against summary-data Mendelian randomisation* (manuscript, 2026).
 
 ## What it does
 
@@ -104,13 +105,30 @@ the registered environment and in a newer one (`repro/paper1`, `docs/VALIDATION.
 The default cap is 1,000. Paper 1's registered analyses used 100 (`nomibench.registered.MAXIT`). At that cap
 one registered fit stopped early; its log odds ratio differs from the converged value by 3.4e-8.
 
+In sparse designs Firth's penalised likelihood can have more than one local maximum. From 1.0.1, `g1` and
+`evaluate` apply a multi-start rule (the fit from zero plus 30 perturbed starts; the highest stationary point is
+kept) and report how many distinct stationary points they found (`n_stationary`, `zero_start_best`). The rule
+lowers the risk of reporting a lower maximum but cannot rule it out; when `n_stationary > 1`, check the fit with
+more starts or other seeds (`starts`, `start_seed`). `starts=0` gives the single zero start that paper 1's
+steps 19–25 used.
+
+## Reading tables
+
+`nomibench.read_table` and `read_smr` parse numbers exactly; pandas' default parser misreads long
+fixed-notation P values, such as SMR writes, and can read them as 0. Identifier columns are read as text, and a
+row whose identifier is empty, `NA`, `N/A`, `NaN`, `null`, `None`, `-` or `.` stops the read unless you ask to
+drop such rows (`missing_ids="drop"`, or `--missing-ids drop` on the command line, with `--id-column`).
+
 Under complete separation, a profile bound far from the estimate can be numerically unstable, because fitted
 probabilities reach 1e-25. Treat such a bound as unbounded.
 
 ## Reproducing paper 1
 
 `repro/paper1/` holds the reproduction script and instructions for the steps that need MetaBrain data. MetaBrain
-results cannot be redistributed, so you need your own copy under its terms. No data ship with this package.
+results cannot be redistributed, so you need your own copy under its terms, and no gene-level data ship here.
+The frozen aggregate outputs that the reproduction compares against (simulation replicates, control sets and
+result tables) are in `repro/paper1/frozen/`, with checksums; they are in the repository and its archived
+releases, not in the Python distributions.
 
 ## Citation
 

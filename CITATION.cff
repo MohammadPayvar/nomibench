@@ -1,13 +1,13 @@
 cff-version: 1.2.0
 message: "If you use nomibench, please cite the archived release and the paper."
 title: "nomibench: calibrated, discoverability-matched benchmarks of gene nominations against genetic causal support"
-version: 1.0.0
-date-released: 2026-10-06        # TO FILL: the date of the tagged release
+version: 1.0.1
+date-released: 2026-11-17        # the date of the tagged release; change it if you tag on another day
 license: BSD-3-Clause
 repository-code: "https://github.com/MohammadPayvar/nomibench"
 # doi: add the release DOI here once Zenodo has reserved or minted it (RELEASE_CHECKLIST.md)
 type: software
-authors:                         # TO FILL before the tagged release: any co-authors, in order
+authors:
   - family-names: "Payvar"
     given-names: "Mohammad"
     affiliation: "Department of Biology, CT.C., Islamic Azad University, Tehran, Iran"

@@ -1,0 +1,154 @@
+==============================================================================
+A5 step 2: E5 calibration | 2026-09-29 01:00 | registered replicate counts | A6 estimand-targeted scenarios
+  exposure file sha256 31f4b17432105574b9c994e6b3a14d2858a15c7a6935328e74658a6d98abb06a (A5 §1: matches)
+==============================================================================
+  analysis set (U_gw, complete Tier P): 11,212 genes
+------------------------------------------------------------------------------
+  E5a: analysis set 11,212 genes, exposed 284 | PS c-statistic 0.622; max |SMD| raw 0.316 -> after PS quintiles 0.044
+      x_N +0.001/+0.020 | x_snp +0.066/-0.014 | x_nd -0.000/+0.013 | x_len +0.316/+0.029 | x_den -0.117/-0.026 | x_z -0.209/-0.044
+      generator (non-exposed genes only): int +1.465, log z_e +0.359, log10 len -0.053, log10 nsnp -1.697, L +4.738, L*log10 D -0.483
+      model-expected exposed events under N0: 5.7 | N2 logit shift -0.331
+      in-locus: exposed 7.0%, other 4.5%
+      G1 target OR (as written -> A6): N0 1.232->beta* -0.218, OR 1.000; N1 1.171->beta* -0.165, OR 1.000; N2 1.228->beta* -0.224, OR 1.000; P-GW_OR1.5 1.807->beta* +0.208, OR 1.500; P-GW_OR2.0 2.361->beta* +0.514, OR 2.000; P-GW_OR2.7 3.109->beta* +0.839, OR 2.700
+      N0           2000 replicates  (0.2 min)
+      N1           2000 replicates  (0.5 min)
+      N2           2000 replicates  (0.8 min)
+      P-GW_OR1.5   1000 replicates  (0.9 min)
+      P-GW_OR2.0   1000 replicates  (1.0 min)
+      P-GW_OR2.7   1000 replicates  (1.1 min)
+      N0           G1 type-I 0.040 (MC SE 0.004) mean logOR +0.001 (target +0.000) | P(upper95<2) 0.154 P(upper97.5<2) 0.024  calibrated
+      N0           naive Fisher type-I 0.029 mean logOR -0.185  conservative
+      N1           G1 type-I 0.038 (MC SE 0.004) mean logOR +0.009 (target +0.000) | P(upper95<2) 0.135 P(upper97.5<2) 0.015  calibrated
+      N1           naive Fisher type-I 0.029 mean logOR -0.242  conservative
+      N2           G1 type-I 0.043 (MC SE 0.005) mean logOR -0.005 (target +0.000) | P(upper95<2) 0.170 P(upper97.5<2) 0.033  calibrated
+      N2           naive Fisher type-I 0.029 mean logOR -0.184  conservative
+      P-GW_OR1.5   G1 power  0.210 (MC SE 0.013) mean logOR +0.409 (target +0.405) | P(lower95>1) 0.262 P(lower97.5>1) 0.197
+      P-GW_OR1.5   naive Fisher power  0.157 mean logOR +0.249
+      P-GW_OR2.0   G1 power  0.497 (MC SE 0.016) mean logOR +0.701 (target +0.693) | P(lower95>1) 0.565 P(lower97.5>1) 0.482
+      P-GW_OR2.0   naive Fisher power  0.396 mean logOR +0.562
+      P-GW_OR2.7   G1 power  0.843 (MC SE 0.012) mean logOR +0.994 (target +0.993) | P(lower95>1) 0.870 P(lower97.5>1) 0.824
+      P-GW_OR2.7   naive Fisher power  0.765 mean logOR +0.871
+      VALIDITY RULE (A5 §4 under A6): G1 CALIBRATED
+      negative control: 1000 sets in 3.1 min
+      NEGATIVE CONTROL: rejection at P<0.05 0.041 (MC SE 0.006) | KS vs U(0,1) P 0.00 | median OR 1.02 (95% range 0.31-2.13) | failed 0 -> PASSES (3.5-6.5%)
+------------------------------------------------------------------------------
+  E5c: analysis set 11,212 genes, exposed 646 | PS c-statistic 0.579; max |SMD| raw 0.204 -> after PS quintiles 0.029
+      x_N -0.079/-0.024 | x_snp -0.006/-0.016 | x_nd -0.071/-0.029 | x_len +0.204/+0.011 | x_den -0.026/+0.005 | x_z -0.085/-0.002
+      generator (non-exposed genes only): int +0.471, log z_e +0.422, log10 len +0.025, log10 nsnp -1.579, L +4.724, L*log10 D -0.473
+      model-expected exposed events under N0: 11.8 | N2 logit shift -0.334
+      in-locus: exposed 5.4%, other 4.5%
+      G1 target OR (as written -> A6): N0 1.089->beta* -0.090, OR 1.000; N1 1.082->beta* -0.084, OR 1.000; N2 1.083->beta* -0.087, OR 1.000; P-GW_OR1.5 1.598->beta* +0.338, OR 1.500; P-GW_OR2.0 2.089->beta* +0.646, OR 2.000; P-GW_OR2.7 2.756->beta* +0.971, OR 2.700
+      N0           2000 replicates  (0.3 min)
+      N1           2000 replicates  (0.5 min)
+      N2           2000 replicates  (0.8 min)
+      P-GW_OR1.5   1000 replicates  (0.9 min)
+      P-GW_OR2.0   1000 replicates  (1.0 min)
+      P-GW_OR2.7   1000 replicates  (1.1 min)
+      N0           G1 type-I 0.045 (MC SE 0.005) mean logOR -0.003 (target +0.000) | P(upper95<2) 0.607 P(upper97.5<2) 0.446  calibrated
+      N0           naive Fisher type-I 0.041 mean logOR -0.064  calibrated
+      N1           G1 type-I 0.038 (MC SE 0.004) mean logOR +0.016 (target +0.000) | P(upper95<2) 0.576 P(upper97.5<2) 0.420  calibrated
+      N1           naive Fisher type-I 0.033 mean logOR -0.061  conservative
+      N2           G1 type-I 0.049 (MC SE 0.005) mean logOR +0.003 (target +0.000) | P(upper95<2) 0.600 P(upper97.5<2) 0.441  calibrated
+      N2           naive Fisher type-I 0.039 mean logOR -0.057  calibrated
+      P-GW_OR1.5   G1 power  0.330 (MC SE 0.015) mean logOR +0.400 (target +0.405) | P(lower95>1) 0.373 P(lower97.5>1) 0.287
+      P-GW_OR1.5   naive Fisher power  0.287 mean logOR +0.356
+      P-GW_OR2.0   G1 power  0.793 (MC SE 0.013) mean logOR +0.702 (target +0.693) | P(lower95>1) 0.824 P(lower97.5>1) 0.757
+      P-GW_OR2.0   naive Fisher power  0.749 mean logOR +0.666
+      P-GW_OR2.7   G1 power  0.985 (MC SE 0.004) mean logOR +0.991 (target +0.993) | P(lower95>1) 0.989 P(lower97.5>1) 0.981
+      P-GW_OR2.7   naive Fisher power  0.980 mean logOR +0.962
+      VALIDITY RULE (A5 §4 under A6): G1 CALIBRATED
+      negative control: 1000 sets in 3.2 min
+      NEGATIVE CONTROL: rejection at P<0.05 0.034 (MC SE 0.006) | KS vs U(0,1) P 0.06 | median OR 1.04 (95% range 0.51-1.70) | failed 0 -> FAILS (outside 3.5-6.5%)
+------------------------------------------------------------------------------
+  E5g: analysis set 11,212 genes, exposed 1373 | PS c-statistic 0.602; max |SMD| raw 0.324 -> after PS quintiles 0.067
+      x_N +0.014/-0.010 | x_snp -0.096/-0.067 | x_nd +0.020/-0.012 | x_len +0.324/+0.025 | x_den -0.250/-0.050 | x_z -0.016/+0.004
+      generator (non-exposed genes only): int +2.341, log z_e +0.404, log10 len -0.130, log10 nsnp -1.891, L +3.775, L*log10 D -0.298
+      model-expected exposed events under N0: 40.6 | N2 logit shift -0.349
+      in-locus: exposed 17.0%, other 2.8%
+      G1 target OR (as written -> A6): N0 2.294->beta* -0.861, OR 1.000; N1 2.293->beta* -0.881, OR 1.000; N2 2.280->beta* -0.906, OR 1.000; P-GW_OR1.5 3.354->beta* -0.444, OR 1.500; P-GW_OR2.0 4.367->beta* -0.144, OR 2.000; P-GW_OR2.7 5.715->beta* +0.173, OR 2.700
+      N0           2000 replicates  (0.4 min)
+      N1           2000 replicates  (0.9 min)
+      N2           2000 replicates  (1.4 min)
+      P-GW_OR1.5   1000 replicates  (1.6 min)
+      P-GW_OR2.0   1000 replicates  (1.9 min)
+      P-GW_OR2.7   1000 replicates  (2.1 min)
+      N0           G1 type-I 0.053 (MC SE 0.005) mean logOR -0.010 (target +0.000) | P(upper95<2) 0.835 P(upper97.5<2) 0.731  calibrated
+      N0           naive Fisher type-I 0.051 mean logOR -0.100  calibrated
+      N1           G1 type-I 0.044 (MC SE 0.005) mean logOR -0.001 (target +0.000) | P(upper95<2) 0.822 P(upper97.5<2) 0.731  calibrated
+      N1           naive Fisher type-I 0.035 mean logOR -0.053  calibrated
+      N2           G1 type-I 0.060 (MC SE 0.005) mean logOR -0.002 (target +0.000) | P(upper95<2) 0.823 P(upper97.5<2) 0.709  calibrated
+      N2           naive Fisher type-I 0.056 mean logOR -0.093  calibrated
+      P-GW_OR1.5   G1 power  0.455 (MC SE 0.016) mean logOR +0.407 (target +0.405) | P(lower95>1) 0.481 P(lower97.5>1) 0.385
+      P-GW_OR1.5   naive Fisher power  0.331 mean logOR +0.322
+      P-GW_OR2.0   G1 power  0.933 (MC SE 0.008) mean logOR +0.697 (target +0.693) | P(lower95>1) 0.939 P(lower97.5>1) 0.897
+      P-GW_OR2.0   naive Fisher power  0.870 mean logOR +0.615
+      P-GW_OR2.7   G1 power  0.999 (MC SE 0.001) mean logOR +0.992 (target +0.993) | P(lower95>1) 0.999 P(lower97.5>1) 0.999
+      P-GW_OR2.7   naive Fisher power  0.998 mean logOR +0.909
+      VALIDITY RULE (A5 §4 under A6): G1 CALIBRATED
+      GATE EVALUABILITY (A5 §5): G1 power at OR 2.7 = 0.999 -> gate is EVALUATED on the real outcome
+------------------------------------------------------------------------------
+  E5b: analysis set 11,212 genes, exposed 295 | PS c-statistic 0.628; max |SMD| raw 0.351 -> after PS quintiles 0.062
+      x_N -0.082/+0.012 | x_snp +0.040/+0.028 | x_nd -0.068/+0.012 | x_len +0.351/+0.062 | x_den -0.038/-0.007 | x_z -0.140/+0.043
+      generator (non-exposed genes only): int +0.528, log z_e +0.326, log10 len +0.022, log10 nsnp -1.529, L +4.355, L*log10 D -0.401
+      model-expected exposed events under N0: 9.1 | N2 logit shift -0.340
+      in-locus: exposed 16.6%, other 4.3%
+      G1 target OR (as written -> A6): N0 1.932->beta* -0.692, OR 1.000; N1 1.917->beta* -0.691, OR 1.000
+      N0           1000 replicates  (0.2 min)
+      N1           1000 replicates  (0.4 min)
+      N0           G1 type-I 0.052 (MC SE 0.007) mean logOR -0.022 (target +0.000) | P(upper95<2) 0.189 P(upper97.5<2) 0.059  calibrated
+      N0           naive Fisher type-I 0.042 mean logOR -0.148  calibrated
+      N1           G1 type-I 0.034 (MC SE 0.006) mean logOR -0.004 (target +0.000) | P(upper95<2) 0.157 P(upper97.5<2) 0.043  conservative
+      N1           naive Fisher type-I 0.027 mean logOR -0.165  conservative
+      VALIDITY RULE (A5 §4 under A6): G1 CALIBRATED
+------------------------------------------------------------------------------
+  E5e: analysis set 11,212 genes, exposed 1712 | PS c-statistic 0.631; max |SMD| raw 0.310 -> after PS quintiles 0.041
+      x_N -0.000/+0.012 | x_snp +0.015/-0.041 | x_nd -0.007/+0.002 | x_len +0.303/+0.018 | x_den -0.310/-0.005 | x_z -0.151/-0.010
+      generator (non-exposed genes only): int +1.256, log z_e +0.264, log10 len -0.040, log10 nsnp -1.604, L +4.394, L*log10 D -0.419
+      model-expected exposed events under N0: 25.6 | N2 logit shift -0.343
+      in-locus: exposed 3.0%, other 4.9%
+      G1 target OR (as written -> A6): N0 0.948->beta* +0.055, OR 1.000; N1 0.954->beta* +0.049, OR 1.000
+      N0           1000 replicates  (0.2 min)
+      N1           1000 replicates  (0.3 min)
+      N0           G1 type-I 0.050 (MC SE 0.007) mean logOR +0.008 (target +0.000) | P(upper95<2) 0.936 P(upper97.5<2) 0.883  calibrated
+      N0           naive Fisher type-I 0.062 mean logOR -0.103  calibrated
+      N1           G1 type-I 0.051 (MC SE 0.007) mean logOR -0.011 (target +0.000) | P(upper95<2) 0.942 P(upper97.5<2) 0.889  calibrated
+      N1           naive Fisher type-I 0.091 mean logOR -0.163  ANTI-CONSERVATIVE
+      VALIDITY RULE (A5 §4 under A6): G1 CALIBRATED
+------------------------------------------------------------------------------
+  E5d: analysis set 11,212 genes, exposed 4712 | PS c-statistic 0.556; max |SMD| raw 0.134 -> after PS quintiles 0.017
+      x_N +0.037/+0.003 | x_snp +0.040/+0.009 | x_nd +0.026/-0.002 | x_len +0.134/+0.017 | x_den +0.023/-0.002 | x_z -0.015/+0.005
+      generator (non-exposed genes only): int -0.799, log z_e +0.394, log10 len +0.047, log10 nsnp -1.275, L +6.568, L*log10 D -0.799
+      model-expected exposed events under N0: 93.6 | N2 logit shift -0.302
+      in-locus: exposed 6.4%, other 3.2%
+      G1 target OR (as written -> A6): N0 1.326->beta* -0.303, OR 1.000; N1 1.335->beta* -0.314, OR 1.000
+      N0           1000 replicates  (0.2 min)
+      N1           1000 replicates  (0.3 min)
+      N0           G1 type-I 0.039 (MC SE 0.006) mean logOR +0.000 (target +0.000) | P(upper95<2) 0.997 P(upper97.5<2) 0.991  calibrated
+      N0           naive Fisher type-I 0.029 mean logOR +0.002  conservative
+      N1           G1 type-I 0.042 (MC SE 0.006) mean logOR +0.002 (target +0.000) | P(upper95<2) 0.994 P(upper97.5<2) 0.988  calibrated
+      N1           naive Fisher type-I 0.040 mean logOR -0.007  calibrated
+      VALIDITY RULE (A5 §4 under A6): G1 CALIBRATED
+------------------------------------------------------------------------------
+  E5c_naive: analysis set 9,839 genes, exposed 559 | PS c-statistic 0.587; max |SMD| raw 0.214 -> after PS quintiles 0.026
+      x_N -0.070/-0.018 | x_snp -0.015/-0.024 | x_nd -0.064/-0.026 | x_len +0.214/+0.006 | x_den -0.019/+0.012 | x_z -0.101/-0.001
+      generator (non-exposed genes only): int +0.862, log z_e +0.503, log10 len -0.070, log10 nsnp -1.645, L +2.434, L*log10 D -0.051
+      model-expected exposed events under N0: 7.7 | N2 logit shift -0.373
+      in-locus: exposed 3.8%, other 2.8%
+      G1 target OR (as written -> A6): N0 1.047->beta* -0.046, OR 1.000; N1 1.041->beta* -0.042, OR 1.000
+      N0           1000 replicates  (0.1 min)
+      N1           1000 replicates  (0.2 min)
+      N0           G1 type-I 0.042 (MC SE 0.006) mean logOR +0.003 (target +0.000) | P(upper95<2) 0.379 P(upper97.5<2) 0.232  calibrated
+      N0           naive Fisher type-I 0.037 mean logOR -0.092  calibrated
+      N1           G1 type-I 0.032 (MC SE 0.006) mean logOR +0.010 (target +0.000) | P(upper95<2) 0.367 P(upper97.5<2) 0.205  conservative
+      N1           naive Fisher type-I 0.029 mean logOR -0.117  conservative
+      VALIDITY RULE (A5 §4 under A6): G1 CALIBRATED
+==============================================================================
+SUMMARY (A5 §4-§5 under A6; calibration only; no E5 outcome has been read)
+  E5a        n=  284  G1 calibrated | NC 0.041 pass
+  E5c        n=  646  G1 calibrated | NC 0.034 FAIL
+  E5g        n= 1373  G1 calibrated | gate power OR2.7 0.999 -> evaluated
+  E5b        n=  295  G1 calibrated
+  E5e        n= 1712  G1 calibrated
+  E5d        n= 4712  G1 calibrated
+  E5c_naive  n=  559  G1 calibrated
+DONE in 12.0 min

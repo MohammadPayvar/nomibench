@@ -1,0 +1,113 @@
+==============================================================================
+A5 step 2: E5 calibration | 2026-09-29 01:12 | registered replicate counts | A5 AS WRITTEN (beta = 0; not a null of G1 for locus-enriched sets; NOT decision-bearing)
+  exposure file sha256 31f4b17432105574b9c994e6b3a14d2858a15c7a6935328e74658a6d98abb06a (A5 §1: matches)
+==============================================================================
+  analysis set (U_gw, complete Tier P): 11,212 genes
+------------------------------------------------------------------------------
+  E5a: analysis set 11,212 genes, exposed 284 | PS c-statistic 0.622; max |SMD| raw 0.316 -> after PS quintiles 0.044
+      x_N +0.001/+0.020 | x_snp +0.066/-0.014 | x_nd -0.000/+0.013 | x_len +0.316/+0.029 | x_den -0.117/-0.026 | x_z -0.209/-0.044
+      generator (non-exposed genes only): int +1.465, log z_e +0.359, log10 len -0.053, log10 nsnp -1.697, L +4.738, L*log10 D -0.483
+      model-expected exposed events under N0: 5.7 | N2 logit shift -0.331
+      in-locus: exposed 7.0%, other 4.5%
+      G1 target OR (as written -> as written): N0 1.232->OR 1.232; N1 1.171->OR 1.171
+      N0           2000 replicates  (0.2 min)
+      N1           2000 replicates  (0.5 min)
+      N0           G1 type-I 0.079 (MC SE 0.006) mean logOR +0.205 (target +0.000) | P(upper95<2) 0.076 P(upper97.5<2) 0.011  ANTI-CONSERVATIVE
+      N0           naive Fisher type-I 0.055 mean logOR +0.033  calibrated
+      N1           G1 type-I 0.072 (MC SE 0.006) mean logOR +0.159 (target +0.000) | P(upper95<2) 0.086 P(upper97.5<2) 0.012  ANTI-CONSERVATIVE
+      N1           naive Fisher type-I 0.040 mean logOR -0.083  calibrated
+      A5 AS WRITTEN (not decision-bearing): G1 rejection N0 0.079, N1 0.072
+------------------------------------------------------------------------------
+  E5c: analysis set 11,212 genes, exposed 646 | PS c-statistic 0.579; max |SMD| raw 0.204 -> after PS quintiles 0.029
+      x_N -0.079/-0.024 | x_snp -0.006/-0.016 | x_nd -0.071/-0.029 | x_len +0.204/+0.011 | x_den -0.026/+0.005 | x_z -0.085/-0.002
+      generator (non-exposed genes only): int +0.471, log z_e +0.422, log10 len +0.025, log10 nsnp -1.579, L +4.724, L*log10 D -0.473
+      model-expected exposed events under N0: 11.8 | N2 logit shift -0.334
+      in-locus: exposed 5.4%, other 4.5%
+      G1 target OR (as written -> as written): N0 1.089->OR 1.089; N1 1.082->OR 1.082
+      N0           2000 replicates  (0.2 min)
+      N1           2000 replicates  (0.5 min)
+      N0           G1 type-I 0.059 (MC SE 0.005) mean logOR +0.083 (target +0.000) | P(upper95<2) 0.491 P(upper97.5<2) 0.339  calibrated
+      N0           naive Fisher type-I 0.049 mean logOR +0.026  calibrated
+      N1           G1 type-I 0.051 (MC SE 0.005) mean logOR +0.094 (target +0.000) | P(upper95<2) 0.486 P(upper97.5<2) 0.330  calibrated
+      N1           naive Fisher type-I 0.035 mean logOR +0.021  conservative
+      A5 AS WRITTEN (not decision-bearing): G1 rejection N0 0.059, N1 0.051
+------------------------------------------------------------------------------
+  E5g: analysis set 11,212 genes, exposed 1373 | PS c-statistic 0.602; max |SMD| raw 0.324 -> after PS quintiles 0.067
+      x_N +0.014/-0.010 | x_snp -0.096/-0.067 | x_nd +0.020/-0.012 | x_len +0.324/+0.025 | x_den -0.250/-0.050 | x_z -0.016/+0.004
+      generator (non-exposed genes only): int +2.341, log z_e +0.404, log10 len -0.130, log10 nsnp -1.891, L +3.775, L*log10 D -0.298
+      model-expected exposed events under N0: 40.6 | N2 logit shift -0.349
+      in-locus: exposed 17.0%, other 2.8%
+      G1 target OR (as written -> as written): N0 2.294->OR 2.294; N1 2.293->OR 2.293
+      N0           2000 replicates  (0.4 min)
+      N1           2000 replicates  (0.9 min)
+      N0           G1 type-I 0.978 (MC SE 0.003) mean logOR +0.823 (target +0.000) | P(upper95<2) 0.005 P(upper97.5<2) 0.003  ANTI-CONSERVATIVE
+      N0           naive Fisher type-I 0.959 mean logOR +0.741  ANTI-CONSERVATIVE
+      N1           G1 type-I 0.983 (MC SE 0.003) mean logOR +0.827 (target +0.000) | P(upper95<2) 0.004 P(upper97.5<2) 0.001  ANTI-CONSERVATIVE
+      N1           naive Fisher type-I 0.978 mean logOR +0.774  ANTI-CONSERVATIVE
+      A5 AS WRITTEN (not decision-bearing): G1 rejection N0 0.978, N1 0.983
+------------------------------------------------------------------------------
+  E5b: analysis set 11,212 genes, exposed 295 | PS c-statistic 0.628; max |SMD| raw 0.351 -> after PS quintiles 0.062
+      x_N -0.082/+0.012 | x_snp +0.040/+0.028 | x_nd -0.068/+0.012 | x_len +0.351/+0.062 | x_den -0.038/-0.007 | x_z -0.140/+0.043
+      generator (non-exposed genes only): int +0.528, log z_e +0.326, log10 len +0.022, log10 nsnp -1.529, L +4.355, L*log10 D -0.401
+      model-expected exposed events under N0: 9.1 | N2 logit shift -0.340
+      in-locus: exposed 16.6%, other 4.3%
+      G1 target OR (as written -> as written): N0 1.932->OR 1.932; N1 1.917->OR 1.917
+      N0           1000 replicates  (0.2 min)
+      N1           1000 replicates  (0.4 min)
+      N0           G1 type-I 0.450 (MC SE 0.016) mean logOR +0.643 (target +0.000) | P(upper95<2) 0.011 P(upper97.5<2) 0.003  ANTI-CONSERVATIVE
+      N0           naive Fisher type-I 0.395 mean logOR +0.558  ANTI-CONSERVATIVE
+      N1           G1 type-I 0.433 (MC SE 0.016) mean logOR +0.645 (target +0.000) | P(upper95<2) 0.011 P(upper97.5<2) 0.002  ANTI-CONSERVATIVE
+      N1           naive Fisher type-I 0.359 mean logOR +0.527  ANTI-CONSERVATIVE
+      A5 AS WRITTEN (not decision-bearing): G1 rejection N0 0.450, N1 0.433
+------------------------------------------------------------------------------
+  E5e: analysis set 11,212 genes, exposed 1712 | PS c-statistic 0.631; max |SMD| raw 0.310 -> after PS quintiles 0.041
+      x_N -0.000/+0.012 | x_snp +0.015/-0.041 | x_nd -0.007/+0.002 | x_len +0.303/+0.018 | x_den -0.310/-0.005 | x_z -0.151/-0.010
+      generator (non-exposed genes only): int +1.256, log z_e +0.264, log10 len -0.040, log10 nsnp -1.604, L +4.394, L*log10 D -0.419
+      model-expected exposed events under N0: 25.6 | N2 logit shift -0.343
+      in-locus: exposed 3.0%, other 4.9%
+      G1 target OR (as written -> as written): N0 0.948->OR 0.948; N1 0.954->OR 0.954
+      N0           1000 replicates  (0.2 min)
+      N1           1000 replicates  (0.3 min)
+      N0           G1 type-I 0.051 (MC SE 0.007) mean logOR -0.048 (target +0.000) | P(upper95<2) 0.961 P(upper97.5<2) 0.924  calibrated
+      N0           naive Fisher type-I 0.091 mean logOR -0.160  ANTI-CONSERVATIVE
+      N1           G1 type-I 0.056 (MC SE 0.007) mean logOR -0.059 (target +0.000) | P(upper95<2) 0.961 P(upper97.5<2) 0.927  calibrated
+      N1           naive Fisher type-I 0.127 mean logOR -0.212  ANTI-CONSERVATIVE
+      A5 AS WRITTEN (not decision-bearing): G1 rejection N0 0.051, N1 0.056
+------------------------------------------------------------------------------
+  E5d: analysis set 11,212 genes, exposed 4712 | PS c-statistic 0.556; max |SMD| raw 0.134 -> after PS quintiles 0.017
+      x_N +0.037/+0.003 | x_snp +0.040/+0.009 | x_nd +0.026/-0.002 | x_len +0.134/+0.017 | x_den +0.023/-0.002 | x_z -0.015/+0.005
+      generator (non-exposed genes only): int -0.799, log z_e +0.394, log10 len +0.047, log10 nsnp -1.275, L +6.568, L*log10 D -0.799
+      model-expected exposed events under N0: 93.6 | N2 logit shift -0.302
+      in-locus: exposed 6.4%, other 3.2%
+      G1 target OR (as written -> as written): N0 1.326->OR 1.326; N1 1.335->OR 1.335
+      N0           1000 replicates  (0.2 min)
+      N1           1000 replicates  (0.3 min)
+      N0           G1 type-I 0.485 (MC SE 0.016) mean logOR +0.280 (target +0.000) | P(upper95<2) 0.816 P(upper97.5<2) 0.734  ANTI-CONSERVATIVE
+      N0           naive Fisher type-I 0.483 mean logOR +0.284  ANTI-CONSERVATIVE
+      N1           G1 type-I 0.521 (MC SE 0.016) mean logOR +0.291 (target +0.000) | P(upper95<2) 0.793 P(upper97.5<2) 0.699  ANTI-CONSERVATIVE
+      N1           naive Fisher type-I 0.490 mean logOR +0.284  ANTI-CONSERVATIVE
+      A5 AS WRITTEN (not decision-bearing): G1 rejection N0 0.485, N1 0.521
+------------------------------------------------------------------------------
+  E5c_naive: analysis set 9,839 genes, exposed 559 | PS c-statistic 0.587; max |SMD| raw 0.214 -> after PS quintiles 0.026
+      x_N -0.070/-0.018 | x_snp -0.015/-0.024 | x_nd -0.064/-0.026 | x_len +0.214/+0.006 | x_den -0.019/+0.012 | x_z -0.101/-0.001
+      generator (non-exposed genes only): int +0.862, log z_e +0.503, log10 len -0.070, log10 nsnp -1.645, L +2.434, L*log10 D -0.051
+      model-expected exposed events under N0: 7.7 | N2 logit shift -0.373
+      in-locus: exposed 3.8%, other 2.8%
+      G1 target OR (as written -> as written): N0 1.047->OR 1.047; N1 1.041->OR 1.041
+      N0           1000 replicates  (0.1 min)
+      N1           1000 replicates  (0.2 min)
+      N0           G1 type-I 0.046 (MC SE 0.007) mean logOR +0.047 (target +0.000) | P(upper95<2) 0.334 P(upper97.5<2) 0.202  calibrated
+      N0           naive Fisher type-I 0.036 mean logOR -0.045  calibrated
+      N1           G1 type-I 0.034 (MC SE 0.006) mean logOR +0.043 (target +0.000) | P(upper95<2) 0.333 P(upper97.5<2) 0.183  conservative
+      N1           naive Fisher type-I 0.027 mean logOR -0.081  conservative
+      A5 AS WRITTEN (not decision-bearing): G1 rejection N0 0.046, N1 0.034
+==============================================================================
+SUMMARY (A5 §4-§5, AS WRITTEN, not decision-bearing; calibration only; no E5 outcome has been read)
+  E5a        n=  284  G1 NOT calibrated
+  E5c        n=  646  G1 calibrated
+  E5g        n= 1373  G1 NOT calibrated
+  E5b        n=  295  G1 NOT calibrated
+  E5e        n= 1712  G1 calibrated
+  E5d        n= 4712  G1 NOT calibrated
+  E5c_naive  n=  559  G1 calibrated
+DONE in 3.2 min

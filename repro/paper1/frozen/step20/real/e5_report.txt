@@ -1,0 +1,106 @@
+freeze check: 70 files match the manifest (2026-09-28 21:52:31 UTC)
+==============================================================================
+A5 step 4: the E5 real outcome
+==============================================================================
+------------------------------------------------------------------------------
+  E5a [CO-PRIMARY]  analysis set 11,212; PS c 0.622 | calibration: G1 calibrated, negative control passes (0.041)
+  events: exposed 4/284 (1.41%)   others 191/10928 (1.75%)
+  naive Fisher                                   0.803 (0.215-2.113)  P 1  events 4/284 vs 191/10928
+  G1 PS-Firth (profile 95% CI)                   0.982 (0.325-2.248)  P 0.9698  
+  G1 PS-Firth (Wald 95% CI)                      0.982 (0.383-2.519)  P 0.9698  
+  G1 PS-Firth (Wald 97.5% CI)                    0.982 (0.334-2.883)  P 0.9698  
+  G1 PS-Firth (profile 97.5% CI)                 0.982 (0.269-2.492)  P 0.9698  
+  G1b PS-quintile Mantel-Haenszel                0.861 (0.317-2.338)  P 0.7695  
+  G1c observed/expected (Poisson-binomial)       0.876 (nan-nan)  P 1  O=4 E=4.6
+  W1 within-locus conditional Firth              1.258 (0.220-5.386)  P 0.7721  in-locus events exposed 2/20, others 57/493; informative strata 30
+  D1 AIPW ATT risk ratio (not plasmode-validated for E5)   0.901 (0.336-2.419)  P 0.8359  50 splits; split SD of ln RR 0.028
+  G1 tier S2 (P + LOEUF + BA9 + tau)             0.931 (0.308-2.140)  P 0.8817  d ln OR -0.053 -> passes (< 0.2)
+  G1 excluding MHC and APOE regions              1.020 (0.338-2.337)  P 0.967  removed 160 genes (6 exposed)
+------------------------------------------------------------------------------
+  E5c [CO-PRIMARY]  analysis set 11,212; PS c 0.579 | calibration: G1 calibrated, negative control FAILS (0.034)
+  events: exposed 17/646 (2.63%)   others 178/10566 (1.68%)
+  naive Fisher                                   1.577 (0.893-2.618)  P 0.08577  events 17/646 vs 178/10566
+  G1 PS-Firth (profile 95% CI)                   1.640 (0.961-2.625)  P 0.06804  
+  G1 PS-Firth (Wald 95% CI)                      1.640 (0.997-2.699)  P 0.06804  
+  G1 PS-Firth (Wald 97.5% CI)                    1.640 (0.928-2.899)  P 0.06804  
+  G1 PS-Firth (profile 97.5% CI)                 1.640 (0.885-2.796)  P 0.06804  
+  G1b PS-quintile Mantel-Haenszel                1.581 (0.955-2.617)  P 0.0748  
+  G1c observed/expected (Poisson-binomial)       1.574 (nan-nan)  P 0.06352  O=17 E=10.8
+  W1 within-locus conditional Firth              1.257 (0.404-3.403)  P 0.6733  in-locus events exposed 5/35, others 54/478; informative strata 30
+  D1 AIPW ATT risk ratio (not plasmode-validated for E5)   1.550 (0.948-2.537)  P 0.08083  50 splits; split SD of ln RR 0.016
+  G1 tier S2 (P + LOEUF + BA9 + tau)             1.497 (0.873-2.409)  P 0.1356  d ln OR -0.091 -> passes (< 0.2)
+  G1 excluding MHC and APOE regions              1.687 (0.988-2.701)  P 0.055  removed 160 genes (9 exposed)
+------------------------------------------------------------------------------
+  E5g [GATE]  analysis set 11,212; PS c 0.602 | calibration: G1 calibrated, power at OR 2.7 0.999
+  events: exposed 59/1373 (4.30%)   others 136/9839 (1.38%)
+  naive Fisher                                   3.203 (2.306-4.404)  P 2.006e-11  events 59/1373 vs 136/9839
+  G1 PS-Firth (profile 95% CI)                   3.467 (2.514-4.730)  P 1.36e-12  
+  G1 PS-Firth (Wald 95% CI)                      3.467 (2.531-4.750)  P 1.36e-12  
+  G1 PS-Firth (Wald 97.5% CI)                    3.467 (2.419-4.969)  P 1.36e-12  
+  G1 PS-Firth (profile 97.5% CI)                 3.467 (2.398-4.942)  P 1.36e-12  
+  G1b PS-quintile Mantel-Haenszel                3.360 (2.452-4.604)  P 4.727e-14  
+  G1c observed/expected (Poisson-binomial)       3.228 (nan-nan)  P 1.471e-14  O=59 E=18.3
+  W1 within-locus conditional Firth              1.078 (0.463-2.486)  P 0.8609  in-locus events exposed 34/233, others 25/280; informative strata 30
+  D1 AIPW ATT risk ratio (not plasmode-validated for E5)   3.232 (2.378-4.394)  P 6.95e-14  50 splits; split SD of ln RR 0.015
+------------------------------------------------------------------------------
+  E5b [secondary]  analysis set 11,212; PS c 0.628 | calibration: G1 calibrated
+  events: exposed 16/295 (5.42%)   others 179/10917 (1.64%)
+  naive Fisher                                   3.440 (1.898-5.840)  P 5.621e-05  events 16/295 vs 179/10917
+  G1 PS-Firth (profile 95% CI)                   3.634 (2.078-5.952)  P 3.285e-05  
+  G1 PS-Firth (Wald 95% CI)                      3.634 (2.156-6.125)  P 3.285e-05  
+  G1 PS-Firth (Wald 97.5% CI)                    3.634 (2.001-6.602)  P 3.285e-05  
+  G1 PS-Firth (profile 97.5% CI)                 3.634 (1.905-6.361)  P 3.285e-05  
+  G1b PS-quintile Mantel-Haenszel                3.353 (1.985-5.664)  P 6.104e-06  
+  G1c observed/expected (Poisson-binomial)       3.253 (nan-nan)  P 4.363e-05  O=16 E=4.9
+  W1 within-locus conditional Firth              1.516 (0.543-3.937)  P 0.4129  in-locus events exposed 8/49, others 51/464; informative strata 30
+  D1 AIPW ATT risk ratio (not plasmode-validated for E5)   3.212 (1.945-5.306)  P 5.169e-06  50 splits; split SD of ln RR 0.036
+------------------------------------------------------------------------------
+  E5e [secondary]  analysis set 11,212; PS c 0.631 | calibration: G1 calibrated
+  events: exposed 33/1712 (1.93%)   others 162/9500 (1.71%)
+  naive Fisher                                   1.133 (0.752-1.662)  P 0.4836  events 33/1712 vs 162/9500
+  G1 PS-Firth (profile 95% CI)                   1.271 (0.855-1.837)  P 0.2283  
+  G1 PS-Firth (Wald 95% CI)                      1.271 (0.869-1.859)  P 0.2283  
+  G1 PS-Firth (Wald 97.5% CI)                    1.271 (0.823-1.964)  P 0.2283  
+  G1 PS-Firth (profile 97.5% CI)                 1.271 (0.805-1.933)  P 0.2283  
+  G1b PS-quintile Mantel-Haenszel                1.243 (0.848-1.823)  P 0.2657  
+  G1c observed/expected (Poisson-binomial)       1.193 (nan-nan)  P 0.29  O=33 E=27.7
+  W1 within-locus conditional Firth              1.792 (0.660-4.497)  P 0.2408  in-locus events exposed 9/51, others 50/462; informative strata 30
+  D1 AIPW ATT risk ratio (not plasmode-validated for E5)   1.229 (0.842-1.793)  P 0.2861  50 splits; split SD of ln RR 0.011
+------------------------------------------------------------------------------
+  E5d [secondary]  analysis set 11,212; PS c 0.556 | calibration: G1 calibrated
+  events: exposed 100/4712 (2.12%)   others 95/6500 (1.46%)
+  naive Fisher                                   1.462 (1.090-1.962)  P 0.01025  events 100/4712 vs 95/6500
+  G1 PS-Firth (profile 95% CI)                   1.471 (1.107-1.958)  P 0.007925  
+  G1 PS-Firth (Wald 95% CI)                      1.471 (1.108-1.955)  P 0.007925  
+  G1 PS-Firth (Wald 97.5% CI)                    1.471 (1.063-2.036)  P 0.007925  
+  G1 PS-Firth (profile 97.5% CI)                 1.471 (1.062-2.040)  P 0.007925  
+  G1b PS-quintile Mantel-Haenszel                1.454 (1.094-1.932)  P 0.00983  
+  G1c observed/expected (Poisson-binomial)       1.391 (nan-nan)  P 0.001558  O=100 E=71.9
+  W1 within-locus conditional Firth              0.711 (0.366-1.380)  P 0.3111  in-locus events exposed 34/303, others 25/210; informative strata 30
+  D1 AIPW ATT risk ratio (not plasmode-validated for E5)   1.424 (1.075-1.887)  P 0.01378  50 splits; split SD of ln RR 0.014
+------------------------------------------------------------------------------
+  E5c_naive [secondary]  analysis set 9,839; PS c 0.587 | calibration: G1 calibrated
+  events: exposed 13/559 (2.33%)   others 123/9280 (1.33%)
+  naive Fisher                                   1.772 (0.912-3.171)  P 0.05966  events 13/559 vs 123/9280
+  G1 PS-Firth (profile 95% CI)                   1.864 (1.006-3.181)  P 0.04796  
+  G1 PS-Firth (Wald 95% CI)                      1.864 (1.055-3.294)  P 0.04796  
+  G1 PS-Firth (Wald 97.5% CI)                    1.864 (0.972-3.574)  P 0.04796  
+  G1 PS-Firth (profile 97.5% CI)                 1.864 (0.913-3.417)  P 0.04796  
+  G1b PS-quintile Mantel-Haenszel                1.791 (1.003-3.198)  P 0.04893  
+  G1c observed/expected (Poisson-binomial)       1.761 (nan-nan)  P 0.05853  O=13 E=7.4
+  W1 within-locus conditional Firth              4.239 (1.074-15.428)  P 0.03992  in-locus events exposed 4/21, others 21/259; informative strata 12
+  D1 AIPW ATT risk ratio (not plasmode-validated for E5)   1.754 (0.995-3.093)  P 0.052  50 splits; split SD of ln RR 0.025
+==============================================================================
+DECISIONS (A5 §5 with A6 §3; pre-specified)
+==============================================================================
+  GATE E5g: G1 OR 3.467, Wald 95% 2.531-4.750 (profile 2.514-4.730) -> PASS
+  E5a: G1 OR 0.982, Wald 97.5% 0.334-2.883 (profile 97.5% 0.269-2.492) -> INCONCLUSIVE
+      S2 d ln OR -0.053 (passes); MHC/APOE-excluded OR 1.020
+  E5c: G1 OR 1.640, Wald 97.5% 0.928-2.899 (profile 97.5% 0.885-2.796) -> NOT INTERPRETED (UNCALIBRATED OR NEGATIVE CONTROL FAILED)
+      S2 d ln OR -0.091 (passes); MHC/APOE-excluded OR 1.687
+  E5b (secondary, descriptive): G1 OR 3.634 (2.078-5.952), P 3.29e-05
+  E5e (secondary, descriptive): G1 OR 1.271 (0.855-1.837), P 0.228
+  E5d (secondary, descriptive): G1 OR 1.471 (1.107-1.958), P 0.00793
+  E5c_naive (secondary, descriptive): G1 OR 1.864 (1.006-3.181), P 0.048
+
+DONE in 4.0 min

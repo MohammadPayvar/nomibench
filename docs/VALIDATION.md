@@ -1,13 +1,65 @@
-# Validation of nomibench 1.0.0
+# Validation of nomibench
 
-Two layers of evidence:
+§0 records the validation of 1.0.1 (17 Nov 2026). §§1–4 are the record of 1.0.0 (6 Oct 2026), unchanged except
+that §4 now lists both source-tree hashes.
+
+## 0. Version 1.0.1
+
+1.0.1 adds exact reading of tables, an explicit rule for missing identifiers and the multi-start rule for Firth
+fits, and deposits paper 1's frozen aggregate outputs (`CHANGELOG.md`). The reproduction uses the single zero start
+(`nomibench.registered.STARTS`), as paper 1's steps 19–25 did.
+
+**Test suite.** 108 tests (104 fast, 4 slow).
+
+| Environment | Python | numpy | scipy | pandas | statsmodels | patsy | scikit-learn | Result |
+|---|---|---|---|---|---|---|---|---|
+| Paper 1's step-20 library versions (wheel installed; tests run from the sdist) | 3.11.18 | 2.4.4 | 1.17.1 | 3.0.2 | 0.15.0 | 1.0.3 | 1.8.0 | 106 passed, 2 skipped (the deposit checks: the sdist does not contain the deposit) |
+| Latest releases (repository checkout) | 3.13.18 | 2.5.3 | 1.18.1 | 3.0.5 | 0.15.0 | 1.0.3 | 1.9.1 | 108 passed |
+
+**Reproduction of paper 1.** The 1.0.1 wheel, the three frozen inputs (hashes matched; `--require-frozen`) and the
+deposited frozen outputs (`repro/paper1/frozen`), all eleven parts (R1–R10 with R4b).
+
+- *Paper 1's library versions (environment A′).* Every criterion passes: 28 checks, 4 informational. The analysis
+  set is 11,212 genes with 197 supported, as frozen. The 1.0.0 source, run in the same environment on the same
+  inputs, printed identical check lines, every maximum difference included; so 1.0.1 changes no number that the
+  reproduction checks.
+- *Latest releases (informational).* 25 checks pass and 3 fail: R3's generator coefficients (2.6e-7 against
+  1e-8), R4's E1 plasmode (1.3e-7 against 1e-8) and R7's D1 (2.6e-3 on the log scale against 1e-6; the
+  scikit-learn change in §3). The 1.0.0 source gives the same three failures with the same values there, so they
+  are drift in the libraries, not a change in the package. To reproduce paper 1, use its library versions.
+
+| | Checked | Tolerance | A′ (1.0.1 and 1.0.0) |
+|---|---|---|---|
+| R1 | the ten registered G1 estimates | 1e-8 | 8.0e-14 |
+| R2 | 83 result-table rows | estimate 1e-6 rel.; bounds 1e-5 log; P 1e-5 rel. | 1.2e-13 |
+| R3 | generator coefficients and N2 shift; estimands | 1e-8 | 4.4e-16; ≤ 2.0e-13 |
+| R4 | E1 plasmode; E5 plasmode (event counts identical) | 1e-8 | 2.0e-10; 8.8e-9 |
+| R4b | D1 replicates: checksums and event counts | identical | identical |
+| R5 | plasmode summaries from the frozen replicate files | 1e-12 | 2.2e-16 |
+| R6 | NC_E5a and NC_E5c sets (event counts identical) | 1e-8 | 2.9e-10; 9.6e-11 |
+| R7 | D1 for E5a on the real outcome | 1e-6 log | 2.2e-16 |
+| R8 | decision readings | identical | identical |
+| R9 | convergence flags; E1's ln OR between caps | as expected; 1e-7 | as expected; 3.4e-8 |
+| R10 | A10 estimands; E2 plasmode; E2-matched controls; 5-Mb bootstrap | 1e-8; 1e-8; 1e-8; 1e-3 | 8.9e-16; 3.5e-11; 2.6e-10; 3.4e-6 |
+
+In the 1.0.0 record (§2), environment A reproduced R4 and R6 to 2.2e-16. On the machine used for 1.0.1, the same
+library versions under Python 3.11.18 give up to 8.8e-9 (R4) and 2.9e-10 (R6), under 1.0.0 and 1.0.1 alike: a
+change of machine (processor and OpenBLAS kernel) and Python patch release, at the scale of the Firth stopping rule
+(§3). Every check stays within its tolerance.
+
+**Exact reading of the SMR table.** In paper 1's SMR table, pandas' default parser misreads 24 of the 11,224
+`p_SMR` values (4 as 0; all below 6×10⁻¹¹) and 13 `p_HEIDI` values (2 as 0). Read exactly, the supported set is
+the same 197 genes under the BH rule, and the Bonferroni outcome is also unchanged. The eQTL-side columns that
+`build_covariates.py` reads are parsed identically either way, so the covariate table does not change.
+
+Two layers of evidence underlie the 1.0.0 record below:
 
 1. **The test suite** (`tests/`, shipped): every estimator against an independent implementation or a known
    answer, on synthetic data and on two published example datasets.
 2. **The reproduction of paper 1** (`repro/paper1/`, private inputs): the package regenerates the registered
    numbers from the registered seeds. Only aggregate differences are reported here.
 
-## 1. Test suite
+## 1. Test suite (1.0.0)
 
 83 tests (79 fast, 4 slow). The full suite passed in three environments:
 
@@ -65,7 +117,7 @@ not used as a reference. The independent BFGS maximisation is used instead.
   are the registered E3 input list (12 public genes) in `repro/paper1/build_covariates.py` and the MHC/APOE
   region name; no gene-level result ships.
 
-## 2. Reproduction of paper 1
+## 2. Reproduction of paper 1 (1.0.0)
 
 **Inputs.** The frozen U_gw covariate table (`f12c36ba…`), SMR table (`295dddce…`) and exposure sets
 (`31f4b174…`), all private (MetaBrain-derived), and the frozen aggregate outputs of steps 19, 20 and 25.
@@ -133,11 +185,12 @@ intervals over 2,000 replicates are not affected at any reported precision.
 
 ## 4. The validated source
 
-The reproduction ran against these source files (the tree hash covers `src/nomibench/*.py`; documentation and
+The reproductions ran against these source files (the tree hash covers `src/nomibench/*.py`; documentation and
 metadata edits do not change it):
 
 ```
-8428d06125b9b6e4d6d0f646d9a8a215d7a0d9741aba7fc5f706a0e3c9e0ca49
+1.0.1  9ae05ae6937166ea548233b43c5db784b10514cf5cd6ff2ffe3c5f137a0b45b1
+1.0.0  8428d06125b9b6e4d6d0f646d9a8a215d7a0d9741aba7fc5f706a0e3c9e0ca49
 ```
 
 ```bash

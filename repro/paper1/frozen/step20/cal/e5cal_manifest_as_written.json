@@ -1,0 +1,28 @@
+{
+ "date": "2026-09-29 01:15:38",
+ "smoke": false,
+ "as_written": true,
+ "exposures": [
+  "E5a",
+  "E5c",
+  "E5g",
+  "E5b",
+  "E5e",
+  "E5d",
+  "E5c_naive"
+ ],
+ "code": {
+  "20b_e5_calibration.py": "df953a9fd55e9a2638c6c2e4d09b1db98a7b29ee21956cd4b1f3bd877996bf71",
+  "gwcore.py": "76de5459ca0fe442e05b84a980809ccb526c5e542a27af495fe2d273052927f4",
+  "mbstats.py": "14af9abe72c9ab940b44d1cdfed4cfcd6e96aaf98899a4b557fc274f8154b79f"
+ },
+ "sets_sha256": "31f4b17432105574b9c994e6b3a14d2858a15c7a6935328e74658a6d98abb06a",
+ "python": "3.11.15",
+ "versions": {
+  "numpy": "2.4.4",
+  "pandas": "3.0.2",
+  "scipy": "1.17.1",
+  "statsmodels": "0.15.0",
+  "patsy": "1.0.3"
+ }
+}

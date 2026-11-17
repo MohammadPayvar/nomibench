@@ -1,0 +1,36 @@
+E5 exposure sets (amendment A5) -- exposure side only, no outcome read
+Agora nominated: 967 | OT genes with direct AD evidence: 12918
+  E5a             494
+  E5b             467
+  agora_other       6
+  E5c            1150
+  E5e            2848
+  E5d            8255
+  E5g            2155
+  E5c_naive      1004
+Pairwise overlaps (n, Jaccard):
+  E5a & E5b:     0  J=0.000
+  E5a & E5c:    55  J=0.035
+  E5a & E5e:   134  J=0.042
+  E5a & E5d:   266  J=0.031
+  E5a & E5g:    61  J=0.024
+  E5b & E5c:    59  J=0.038
+  E5b & E5e:   158  J=0.050
+  E5b & E5d:   205  J=0.024
+  E5b & E5g:   101  J=0.040
+  E5c & E5e:     0  J=0.000
+  E5c & E5d:     0  J=0.000
+  E5c & E5g:   146  J=0.046
+  E5e & E5d:     0  J=0.000
+  E5e & E5g:   318  J=0.068
+  E5d & E5g:  1026  J=0.109
+
+Testability against U_gw (11224 genes; membership only, no outcome):
+  E5a             284 of 494    testable (57.5%)
+  E5b             295 of 467    testable (63.2%)
+  agora_other       3 of 6      testable (50.0%)
+  E5c             646 of 1150   testable (56.2%)
+  E5e            1712 of 2848   testable (60.1%)
+  E5d            4712 of 8255   testable (57.1%)
+  E5g            1373 of 2155   testable (63.7%)
+  E5c_naive       559 of 1004   testable (55.7%)

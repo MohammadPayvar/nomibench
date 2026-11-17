@@ -1,0 +1,19 @@
+D1 double-ML | U_gw 11,212 genes, E1 528 | spline basis 17 columns | splits 50
+  e(X) cross-fitted for 50 splits in 0.5 min
+    N0           2000 replicates  (9.5 min)
+    N1           2000 replicates  (20.7 min)
+    N2           2000 replicates  (29.9 min)
+    P-GW_OR1.5   1000 replicates  (34.6 min)
+    P-GW_OR2.0   1000 replicates  (39.2 min)
+    P-GW_OR2.7   1000 replicates  (43.7 min)
+  N0           type-I 0.041 (MC SE 0.004) mean ln RR -0.052 mean GLM weight 0.49  calibrated
+  N1           type-I 0.040 (MC SE 0.004) mean ln RR -0.044 mean GLM weight 0.60  calibrated
+  N2           type-I 0.042 (MC SE 0.004) mean ln RR -0.035 mean GLM weight 0.49  calibrated
+  P-GW_OR1.5   power 0.318 (MC SE 0.015) mean ln RR +0.363 mean GLM weight 0.49
+  P-GW_OR2.0   power 0.712 (MC SE 0.014) mean ln RR +0.616 mean GLM weight 0.49
+  P-GW_OR2.7   power 0.965 (MC SE 0.006) mean ln RR +0.892 mean GLM weight 0.50
+  D1 VALIDITY RULE: CALIBRATED
+  D1 E1  : RR_ATT 1.266 (0.737-2.176) P 0.392  [50 splits; split-to-split SD of ln RR 0.015]
+  D1 E1w : RR_ATT 1.278 (0.700-2.330) P 0.424  [50 splits; split-to-split SD of ln RR 0.034]
+  D1 E2  : RR_ATT 0.995 (0.720-1.375) P 0.978  [50 splits; split-to-split SD of ln RR 0.016]
+DONE in 47.3 min
